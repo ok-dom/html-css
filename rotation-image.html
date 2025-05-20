@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Overlay Example</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        .image-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 50px auto;
+        }
+
+        .image-container img {
+            position: absolute;
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s;
+            border-radius: 15px;
+        }
+
+        .center-image {
+            z-index: 2;
+        }
+
+        .left-image {
+            z-index: 1;
+            transform: rotate(-20deg);
+            top: 40px;
+            left: -200px;
+        }
+
+        .right-image {
+            z-index: 1;
+            transform: rotate(20deg);
+            top: 40px;
+            left: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <img src="img/pwa-1.png" alt="Left Image" class="left-image">
+        <img src="img/pwa-2.png" alt="Center Image" class="center-image">
+        <img src="img/pwa-3.png" alt="Right Image" class="right-image">
+    </div>
+    <button onclick="downloadImage()">Download as PNG</button>
+
+    <script>
+        function downloadImage() {
+            html2canvas(document.querySelector('.image-container')).then(canvas => {
+                let link = document.createElement('a');
+                link.download = 'image.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                console.log('Image downloaded successfully');
+            }).catch(error => {
+                console.error('Error downloading the image:', error);
+            });
+        }
+    </script>
+</body>
+</html>
